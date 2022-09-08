@@ -13,17 +13,18 @@ df.set_index('Player', inplace=True)
 
 
 # STAT WEIGHTS # TODO tune these somehow
+# TODO softmax these
 weight_G = 1
 weight_GS = 1
 weight_Tgt = 1
 weight_Rec = 1
-weight_PassingYds = 1
+weight_PassingYds = 1/20
 weight_PassingTD = 2
 weight_PassingAtt = .5
-weight_RushingYds = 1
+weight_RushingYds = 1/10
 weight_RushingTD = 2
 weight_RushingAtt = .5
-weight_ReceivingYds = 1
+weight_ReceivingYds = 1/10
 weight_ReceivingTD = 2
 weight_FantasyPoints = 2
 weight_Int = -1
@@ -191,7 +192,7 @@ while True:
     if i=='l': # load checkpoint
         fp = input('Enter draft checkpoint filepath:')
         player_scores = pd.read_csv(fp, index_col='Player')
-    if i=='r': # remove player
+    if i=='r' or i=='x': # remove player
         del_player = input('remove player:')
         try: player_scores.drop(index=del_player, inplace=True)
         except KeyError: print(del_player, 'not found')
